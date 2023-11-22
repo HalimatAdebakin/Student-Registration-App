@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { InMemoryDatabaseProvider } from './components/InMemoryDatabase';
 // import AdminLogin from './components/AdminLogin';
 // import Dashboard from './components/Dashboard';
 // import LogOut from './components/LogOut';

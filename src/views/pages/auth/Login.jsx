@@ -6,7 +6,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [inputType, setInputType] = useState("password");
   const navigate = useNavigate();
-  // const { getAllStudents } = useInMemoryDatabase();
+  
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
