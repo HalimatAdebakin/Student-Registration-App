@@ -16,7 +16,16 @@ export function AuthProvider({ children }) {
   const fetchUserData = async () => {
     try {
       
-      setUser(null);
+      setUser({
+        id: 1,
+        email: 'tester@gmail.com',
+        firstName: 'Hassan',
+        lastName: 'Surecoder',
+        role: 'admin',
+        status: 1
+      });
+
+      setToken("ujdndn8fvf8vf8vhfuvnducvndcjndc")
 
     } catch (error) {
       responseCatcher(error)
@@ -41,6 +50,7 @@ export function AuthProvider({ children }) {
   };
 
   useEffect(() => {
+    localStorage.setItem('token', JSON.stringify("nndnvjdnvdjvndvnd8d8vdhvudndnvdvdnvnvbn"));
     async function checkLocalStorage() {  
    
         const tokenFromLocalStorage = await asyncLocalStorage.getItem('token');
