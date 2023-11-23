@@ -4,7 +4,16 @@ import MainLayout from "../views/layout/MainLayout";
 import Dashboard from "../views/pages/Dashboard";
 import Login from "../views/pages/auth/Login";
 import Register from "../views/pages/auth/Register";
+import AddStudent from "../views/pages/student/AddStudent";
+import AddSuccess from "../views/pages/student/AddSuccess";
+import DeleteStudent from "../views/pages/dropdown/DeleteStudent";
+import StudentProfile from "../views/pages/student/StudentProfile";
 import DashboardSkeleton from "../views/skeleton/DashboardSkeleton";
+import Menu from "../views/pages/dropdown/Menu";
+
+
+
+
 
 
 const createRoute = (path, element, pageName, privateRoute = true, skeleton = DashboardSkeleton) => ({
@@ -25,6 +34,12 @@ const createRoute = (path, element, pageName, privateRoute = true, skeleton = Da
     createRoute("/login", Login, "Login", false),
     createRoute("/register", Register, "Register", false),
     createRoute("/", Dashboard, "Dashboard", true, DashboardSkeleton),
+    createRoute("/addstudent", AddStudent, "add student", true),
+    createRoute("/addsuccess", AddSuccess, "add success", true),
+    createRoute("/profile", StudentProfile, "student profile", true),
+    createRoute("/delete", DeleteStudent, "delete student", true),
+    createRoute("/menu", Menu, "menu", true),
+   
   
   ];
   

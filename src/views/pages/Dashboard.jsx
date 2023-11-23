@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import frame1 from "../../images/frame1.svg";
 import frame2 from "../../images/frame2.svg";
 import button from "../../images/Button.svg";
@@ -84,273 +84,56 @@ function Dashboard() {
             {" "}
             <img className="" src={filter} alt="frame1" />
           </div>
-          <button 
-          type="button"
-          className="text-white bg-[#36A1C5] border rounded-full border-[#DFE2E2] font-medium text-base py-2.5 px-3" >
-            Add New Students</button>
+          <button
+            type="button"
+            className="text-white bg-[#36A1C5] border rounded-full border-[#DFE2E2] font-medium text-base py-2.5 px-3"
+          >
+            Add New Students
+          </button>
         </div>
       </div>
       <div className="body3 mt-4 p-6">
-        <div className="flex gap-3 items-center border-b border-[#ECEEEE] text-base font-normal text-[#748181] pb-3">
-          <div className="flex-auto">Student Name</div>
-          <div className="flex-auto">Student ID</div>
-          <div className="flex-auto">Course</div>
-          <div className="flex-auto">Faculty</div>
-          <div className="flex-auto">Location</div>
-        </div>
-        <div className="flex mt-2.5 items-center border-b border-[#ECEEEE]">
-          <div className="flex flex-auto gap-2 items-center mb-2">
-            <div>
-              <img className="" src={avatar2} alt="frame1" />
-            </div>
-            <div>
-              <div className="font-medium text-sm text-[#131515]">Halimat Adebakin</div>
-              <div className="font-normal text-xs text-[#748181]">halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">160407054</div>
-          <div className="flex-auto font-medium text-sm text-[#131515] ">Systems Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Yaba</div>
-          <div className="">
-            <img className="" src={arrow} alt="frame1" />
-          </div>
-        </div>
-        <div className="flex mt-2.5 items-center border-b border-[#ECEEEE]">
-          <div className="flex flex-auto gap-2 items-center mb-2">
-            <div>
-              <img className="" src={avatar2} alt="frame1" />
-            </div>
-            <div>
-              <div className="font-medium text-sm text-[#131515]">Halimat Adebakin</div>
-              <div className="font-normal text-xs text-[#748181]">halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">160407054</div>
-          <div className="flex-auto font-medium text-sm text-[#131515] ">Systems Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Yaba</div>
-          <div className="">
-            <img className="" src={arrow} alt="frame1" />
-          </div>
-        </div>
-        <div className="flex mt-2.5 items-center border-b border-[#ECEEEE]">
-          <div className="flex flex-auto gap-2 items-center mb-2">
-            <div>
-              <img className="" src={avatar2} alt="frame1" />
-            </div>
-            <div>
-              <div className="font-medium text-sm text-[#131515]">Halimat Adebakin</div>
-              <div className="font-normal text-xs text-[#748181]">halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">160407054</div>
-          <div className="flex-auto font-medium text-sm text-[#131515] ">Systems Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Yaba</div>
-          <div className="">
-            <img className="" src={arrow} alt="frame1" />
-          </div>
-        </div>
-        <div className="flex mt-2.5 items-center border-b border-[#ECEEEE]">
-          <div className="flex flex-auto gap-2 items-center mb-2">
-            <div>
-              <img className="" src={avatar2} alt="frame1" />
-            </div>
-            <div>
-              <div className="font-medium text-sm text-[#131515]">Halimat Adebakin</div>
-              <div className="font-normal text-xs text-[#748181]">halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">160407054</div>
-          <div className="flex-auto font-medium text-sm text-[#131515] ">Systems Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Yaba</div>
-          <div className="">
-            <img className="" src={arrow} alt="frame1" />
-          </div>
-        </div>
-        <div className="flex mt-2.5 items-center border-b border-[#ECEEEE]">
-          <div className="flex flex-auto gap-2 items-center mb-2">
-            <div>
-              <img className="" src={avatar2} alt="frame1" />
-            </div>
-            <div>
-              <div className="font-medium text-sm text-[#131515]">Halimat Adebakin</div>
-              <div className="font-normal text-xs text-[#748181]">halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">160407054</div>
-          <div className="flex-auto font-medium text-sm text-[#131515] ">Systems Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Yaba</div>
-          <div className="">
-            <img className="" src={arrow} alt="frame1" />
-          </div>
-        </div>
-        <div className="flex mt-2.5 items-center border-b border-[#ECEEEE]">
-          <div className="flex flex-auto gap-2 items-center mb-2">
-            <div>
-              <img className="" src={avatar2} alt="frame1" />
-            </div>
-            <div>
-              <div className="font-medium text-sm text-[#131515]">Halimat Adebakin</div>
-              <div className="font-normal text-xs text-[#748181]">halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">160407054</div>
-          <div className="flex-auto font-medium text-sm text-[#131515] ">Systems Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Yaba</div>
-          <div className="">
-            <img className="" src={arrow} alt="frame1" />
-          </div>
-        </div>
-        <div className="flex mt-2.5 items-center border-b border-[#ECEEEE]">
-          <div className="flex flex-auto gap-2 items-center mb-2">
-            <div>
-              <img className="" src={avatar2} alt="frame1" />
-            </div>
-            <div>
-              <div className="font-medium text-sm text-[#131515]">Halimat Adebakin</div>
-              <div className="font-normal text-xs text-[#748181]">halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">160407054</div>
-          <div className="flex-auto font-medium text-sm text-[#131515] ">Systems Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Yaba</div>
-          <div className="">
-            <img className="" src={arrow} alt="frame1" />
-          </div>
-        </div>
-        <div className="flex mt-2.5 items-center border-b border-[#ECEEEE]">
-          <div className="flex flex-auto gap-2 items-center mb-2">
-            <div>
-              <img className="" src={avatar2} alt="frame1" />
-            </div>
-            <div>
-              <div className="font-medium text-sm text-[#131515]">Halimat Adebakin</div>
-              <div className="font-normal text-xs text-[#748181]">halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">160407054</div>
-          <div className="flex-auto font-medium text-sm text-[#131515] ">Systems Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Yaba</div>
-          <div className="">
-            <img className="" src={arrow} alt="frame1" />
-          </div>
-        </div>
-        <div className="flex mt-2.5 items-center border-b border-[#ECEEEE]">
-          <div className="flex flex-auto gap-2 items-center mb-2">
-            <div>
-              <img className="" src={avatar2} alt="frame1" />
-            </div>
-            <div>
-              <div className="font-medium text-sm text-[#131515]">Halimat Adebakin</div>
-              <div className="font-normal text-xs text-[#748181]">halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">160407054</div>
-          <div className="flex-auto font-medium text-sm text-[#131515] ">Systems Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Yaba</div>
-          <div className="">
-            <img className="" src={arrow} alt="frame1" />
-          </div>
-        </div>
-        <div className="flex mt-2.5 items-center border-b border-[#ECEEEE]">
-          <div className="flex flex-auto gap-2 items-center mb-2">
-            <div>
-              <img className="" src={avatar2} alt="frame1" />
-            </div>
-            <div>
-              <div className="font-medium text-sm text-[#131515]">Halimat Adebakin</div>
-              <div className="font-normal text-xs text-[#748181]">halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">160407054</div>
-          <div className="flex-auto font-medium text-sm text-[#131515] ">Systems Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Engineering</div>
-          <div className="flex-auto font-medium text-sm text-[#131515]">Yaba</div>
-          <div className="">
-            <img className="" src={arrow} alt="frame1" />
-          </div>
-        </div>
-        {/* <div className="flex">
-          <div className="flex gap-2 items-center mb-2">
-            <div><img className="" src={avatar2} alt="frame1" /></div>
-            <div>
-              <div>Halimat Adebakin</div>
-              <div>halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          </div>
-          <div className="flex">
-          <div className="flex gap-2 items-center mb-2">
-            <div><img className="" src={avatar2} alt="frame1" /></div>
-            <div>
-              <div>Halimat Adebakin</div>
-              <div>halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          </div>
-          <div className="flex">
-          <div className="flex gap-2 items-center mb-2">
-            <div><img className="" src={avatar2} alt="frame1" /></div>
-            <div>
-              <div>Halimat Adebakin</div>
-              <div>halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          </div>
-          <div className="flex">
-          <div className="flex gap-2 items-center mb-2">
-            <div><img className="" src={avatar2} alt="frame1" /></div>
-            <div>
-              <div>Halimat Adebakin</div>
-              <div>halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          </div>
-          <div className="flex">
-          <div className="flex gap-2 items-center mb-2">
-            <div><img className="" src={avatar2} alt="frame1" /></div>
-            <div>
-              <div>Halimat Adebakin</div>
-              <div>halimatadebakin@gmail.com</div>
-            </div>
-          </div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          </div> */}
+        <table className="min-w-full border-b border-[#ECEEEE] text-base font-normal text-[#748181]">
+          <thead>
+            <tr>
+              <th className="border-b px-4 py-2">Student Name</th>
+              <th className="border-b px-4 py-2">Student ID</th>
+              <th className="border-b px-4 py-2">Course</th>
+              <th className="border-b px-4 py-2">Faculty</th>
+              <th className="border-b px-4 py-2">Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.from({ length: 10 }, (_, index) => (
+              <tr key={index}>
+                <td className="border-b px-4 py-2">
+                  <div className="flex gap-2 items-center">
+                    <div>
+                      <img className="" src={avatar2} alt="frame1" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-sm text-[#131515]">
+                        Halimat Adebakin
+                      </div>
+                      <div className="font-normal text-xs text-[#748181]">
+                        halimatadebakin@gmail.com
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td className="border-b px-4 py-2">160407054</td>
+                <td className="border-b px-4 py-2">Faculty</td>
+                <td className="border-b px-4 py-2">Location</td>
+                <td className="border-b px-4 py-2">
+                  <img className="" src={arrow} alt="frame1" />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
-  )
-} 
+  );
+}
 
-export default Dashboard
+export default Dashboard;
