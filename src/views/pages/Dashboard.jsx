@@ -5,8 +5,12 @@ import button from "../../images/Button.svg";
 import filter from "../../images/filter.svg";
 import avatar2 from "../../images/avatar2.svg";
 import arrow from "../../images/arrow.svg";
+import { NavLink } from "react-router-dom";
+import { useStudent } from "../../context/StudentContext";
+
 
 function Dashboard() {
+  const {students} = useStudent();
   return (
     <div>
       <div className="body1 flex border-b border-[#ECEEEE]  gap-6">
@@ -84,12 +88,12 @@ function Dashboard() {
             {" "}
             <img className="" src={filter} alt="frame1" />
           </div>
-          <button
-            type="button"
+          <NavLink
+            to="/addstudent"
             className="text-white bg-[#36A1C5] border rounded-full border-[#DFE2E2] font-medium text-base py-2.5 px-3"
           >
-            Add New Students
-          </button>
+            Add New Student
+          </NavLink>
         </div>
       </div>
       <div className="body3 mt-4 p-6">
@@ -104,26 +108,27 @@ function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {Array.from({ length: 10 }, (_, index) => (
-              <tr key={index}>
+            {students.map((student) => (
+              <tr key={student?.id}>
                 <td className="border-b px-4 py-2">
                   <div className="flex gap-2 items-center">
-                    <div>
-                      <img className="" src={avatar2} alt="frame1" />
+                    <div className="w-12 h-12 rounded-full">
+                      <img className="w-full h-full rounded-full" src={student.picture} alt="frame1" />
                     </div>
                     <div>
                       <div className="font-medium text-sm text-[#131515]">
-                        Halimat Adebakin
+                        {student.firstName} {student.lastName}
                       </div>
                       <div className="font-normal text-xs text-[#748181]">
-                        halimatadebakin@gmail.com
+                        {student.email}
                       </div>
                     </div>
                   </div>
                 </td>
-                <td className="border-b px-4 py-2">160407054</td>
-                <td className="border-b px-4 py-2">Faculty</td>
-                <td className="border-b px-4 py-2">Location</td>
+                <td className="border-b px-4 py-2">{student?.id ?? '----'}</td>
+                <td className="border-b px-4 py-2">{student.course}</td>
+                <td className="border-b px-4 py-2">{student.faculty}</td>
+                <td className="border-b px-4 py-2">{student.location}</td>
                 <td className="border-b px-4 py-2">
                   <img className="" src={arrow} alt="frame1" />
                 </td>

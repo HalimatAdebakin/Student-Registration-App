@@ -1,5 +1,9 @@
 import React, {useState} from 'react'
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../../context/AuthContext';
+import { toast } from 'react-toastify';
+import { users } from '../../../models/userDb';
+
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -7,6 +11,7 @@ function Login() {
   const [inputType, setInputType] = useState("password");
   const navigate = useNavigate();
   
+  const {login} = useAuth();
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -14,18 +19,26 @@ function Login() {
   const togglePasswordVisibility = () => {
     setInputType((prevType) => (prevType === "password" ? "text" : "password"));
   };
+  
   const handleLogin = () => {
-    // const students = getAllStudents();
-    // console.log("List of students:", students);
+    // Perform authentication logic
+    const user = users.find((u) => u.username === username && u.password === password);
 
-    // if (authenticateAdmin(username, password)) {
-    //   // Authentication successful, redirect to the dashboard
-    //   navigate('/dashboard');
-    // } else {
-    //   // Authentication failed, display an error message 
-    //   alert('Invalid credentials');
-    // }
+    if (user) {
+      // Generate a unique token (replace with a proper token generation logic)
+      const token = generateUniqueToken(user.id);
+
+      // Call the login function from the AuthContext
+      login(token, user);
+    } else {
+      toast.error('Invalid credentials');
+    }
   };
+
+  const generateUniqueToken = (userId) => {
+    return `${userId}-${Date.now()}-${Math.random().toString(36).substr(2, 10)}`;
+  };
+
 
   return (
     <div className="small-container h-auto items-center p-10 gap-10">

@@ -1,150 +1,76 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useState, useReducer, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { responseCatcher } from '../resources/response';
-import config from '../config/config';
+import { users } from '../models/userDb';
 
 
 const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+const authReducer = (state, action) => {
+  switch (action.type) {
+    case 'LOGIN':
+      return { isAuthenticated: true, token: action.payload };
+    case 'LOGOUT':
+      return { isAuthenticated: false, token: null };
+    default:
+      return state;
+  }
+};
+
+export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
-
-  const fetchUserData = async () => {
-    try {
-      
-      setUser({
-        id: 1,
-        email: 'tester@gmail.com',
-        firstName: 'Hassan',
-        lastName: 'Surecoder',
-        role: 'admin',
-        status: 1
-      });
-
-      setToken("ujdndn8fvf8vf8vhfuvnducvndcjndc")
-
-    } catch (error) {
-      responseCatcher(error)
-      console.error('Error fetching authenticated data:', error);
-
-      // when auth fails
-      setUser(null);
-      setIsLoggedIn(false);
-      setToken(null);
-      localStorage.removeItem('token');
-
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const asyncLocalStorage = {
-    getItem: async (key) => {
-      return await Promise.resolve(localStorage.getItem(key));
-    },
-    // Implement other methods similarly if needed
-  };
+  const [token, setToken] = useState(null);
+  const [authState, dispatch] = useReducer(authReducer, {
+    isAuthenticated: false,
+    token: null,
+  }); 
 
   useEffect(() => {
-    localStorage.setItem('token', JSON.stringify("nndnvjdnvdjvndvnd8d8vdhvudndnvdvdnvnvbn"));
-    async function checkLocalStorage() {  
-   
-        const tokenFromLocalStorage = await asyncLocalStorage.getItem('token');
-
-        if(tokenFromLocalStorage) {
-          fetchUserData();
-          setIsLoggedIn(true);
-        }else{
-          setLoading(false);
-        }
-      
+    // Check local storage for an existing token
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      const userId = localStorage.getItem('userID');
+      const myUserData = users.find((u) => u.id === parseInt(userId));
+      setUser(myUserData);
+      setIsLoggedIn(true);
+      setToken(true);
+      dispatch({ type: 'LOGIN', payload: storedToken });
+      setLoading(false)
     }
-      
-    checkLocalStorage();
   }, []);
 
-  const authenticateUser = async (response) => {
-    const { token: newToken, userData: newUser } = response;
-
-    if (newToken) {
-      localStorage.setItem('token', JSON.stringify(newToken));
-      setToken(newToken);
-      setUser(newUser);
-      setIsLoggedIn(true);
-      fetchUserData();
-      toast.success(response.message);
-    }
-    
-  };
-
-  const register = async (userFormData) => {
-    try {
-     
-      authenticateUser({});
-    } catch (error) {
-      responseCatcher(error);
-    }
-  };
- 
-  const login = async (userLoginData) => {
-    try {
-      
-      authenticateUser({});
-    } catch (error) {
-      responseCatcher(error);
-    }
-  };
-
-
-  const updateUserData = async (newUserData, showNotification = true) => {
-    try {
-     
-
-    } catch (error) {
-      responseCatcher(error);
-      return false;
-    }
+  const login = (token, user) => {
+    dispatch({ type: 'LOGIN', payload: token });
+    setIsLoggedIn(true);
+    setToken(token)
+    setUser(user);
+    localStorage.setItem('token', token);
+    localStorage.setItem('userID', user.id);
+    toast.success("Successfully Logged In");
   };
 
   const logout = () => {
-      toast.success("Logged out Successfully");
-      setUser(null);
-      setIsLoggedIn(false);
-      setToken(null);
-      localStorage.removeItem('token');
+    dispatch({ type: 'LOGOUT' });
+    setIsLoggedIn(false);
+    setToken(null)
+    setUser(null)
+    toast.success("Logged out Successfully");
+    localStorage.removeItem('token');
+    localStorage.removeItem('userID');
   };
 
-
-  const authContextValue = useMemo(() => {
-    return {
-      user,
-      isLoggedIn,
-      login,
-      logout,
-      token,
-      register,
-      fetchUserData,
-      loading,
-      updateUserData,
-      authenticateUser,
-    };
-  }, [user, isLoggedIn, token, loading]);
-
   return (
-    <AuthContext.Provider value={authContextValue}>
+    <AuthContext.Provider value={{ ...authState, login, logout, isLoggedIn, loading, user }}>
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
+};
+ 
+export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-}
+};
