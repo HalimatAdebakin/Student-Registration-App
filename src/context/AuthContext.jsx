@@ -37,6 +37,8 @@ export const AuthProvider = ({ children }) => {
       setToken(true);
       dispatch({ type: 'LOGIN', payload: storedToken });
       setLoading(false)
+    }else{
+      setLoading(false)
     }
   }, []);
 

@@ -105,6 +105,7 @@ function Dashboard() {
               <th className="border-b px-4 py-2">Course</th>
               <th className="border-b px-4 py-2">Faculty</th>
               <th className="border-b px-4 py-2">Location</th>
+              <th className="border-b px-4 py-2">Action</th>
             </tr>
           </thead>
           <tbody>
