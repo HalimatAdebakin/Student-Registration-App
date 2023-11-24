@@ -10,6 +10,7 @@ import DeleteStudent from "../views/pages/dropdown/DeleteStudent";
 import StudentProfile from "../views/pages/student/StudentProfile";
 import DashboardSkeleton from "../views/skeleton/DashboardSkeleton";
 import Menu from "../views/pages/dropdown/Menu";
+import EditStudent from "../views/pages/student/EditStudent";
 
 
 
@@ -35,7 +36,8 @@ const createRoute = (path, element, pageName, privateRoute = true, skeleton = Da
     createRoute("/register", Register, "Register", false),
     createRoute("/", Dashboard, "Dashboard", true, DashboardSkeleton),
     createRoute("/addstudent", AddStudent, "add student", true),
-    createRoute("/addsuccess", AddSuccess, "add success", true),
+    createRoute("/editstudent/:id", EditStudent, "Edit student", true),
+    createRoute("/addsuccess/:id", AddSuccess, "add success", true),
     createRoute("/profile", StudentProfile, "student profile", true),
     createRoute("/delete", DeleteStudent, "delete student", true),
     createRoute("/menu", Menu, "menu", true),

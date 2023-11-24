@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import frame1 from "../../images/frame1.svg";
 import frame2 from "../../images/frame2.svg";
 import button from "../../images/Button.svg";
@@ -11,6 +11,14 @@ import { useStudent } from "../../context/StudentContext";
 
 function Dashboard() {
   const {students} = useStudent();
+
+  const [totalNumberOfStudents, setTotalNumberOfStudents] = useState(students.length ?? 0);
+  const [totalNumberOfActive, setTotalNumberOfActive] = useState(0);
+  const [totalNumberOfGraduated, setTotalNumberOfGraduated] = useState(0);
+
+  // useEffect(() => {
+     
+  // },[]);
   return (
     <div>
       <div className="body1 flex border-b border-[#ECEEEE]  gap-6">
@@ -22,7 +30,7 @@ function Dashboard() {
             <div className="font-normal text-sm items-center mb-2">
               Total Number of Students
             </div>
-            <div className="font-semibold text-2xl items-center">200,000</div>
+            <div className="font-semibold text-2xl items-center">{totalNumberOfStudents}</div>
           </div>
         </div>
         <div className="border-2 items-center gap-5 flex-auto flex p-6 rounded-2xl">
@@ -34,7 +42,7 @@ function Dashboard() {
               Active Students
             </div>
             <div className="font-semibold text-2xl items-center text-[#131515]">
-              100,000
+              {totalNumberOfActive}
             </div>
           </div>
         </div>
@@ -47,7 +55,7 @@ function Dashboard() {
               Graduated Students
             </div>
             <div className="font-semibold text-2xl items-center text-[#131515]">
-              100,000
+              {totalNumberOfGraduated}
             </div>
           </div>
         </div>
@@ -130,8 +138,40 @@ function Dashboard() {
                 <td className="border-b px-4 py-2">{student.course}</td>
                 <td className="border-b px-4 py-2">{student.faculty}</td>
                 <td className="border-b px-4 py-2">{student.location}</td>
-                <td className="border-b px-4 py-2">
-                  <img className="" src={arrow} alt="frame1" />
+                <td className="flex items-center justify-center gap-3 px-4 py-2">
+                  <span className="text-green-600">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                    <polygon points="13 2 3 14 12 22 21 14 11 2 13 2"></polygon>
+                  </svg>
+                  </span>
+                  <span className="text-red-600">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="3" y="6" width="18" height="12" rx="2" ry="2"></rect>
+                    <line x1="9" y1="3" x2="9" y2="21"></line>
+                    <line x1="15" y1="3" x2="15" y2="21"></line>
+                  </svg>
+
+                  </span>
                 </td>
               </tr>
             ))}

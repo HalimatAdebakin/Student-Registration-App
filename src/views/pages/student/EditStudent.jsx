@@ -1,77 +1,88 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import Select from "react-select";
+import { users } from '../../../models/userDb';
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useStudent } from "../../../context/StudentContext";
-import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import { useStudent } from '../../../context/StudentContext';
 
 
+function EditStudent() {
+    const {id} = useParams();
+    const [userAccount, setUserAccount] = useState(null);
+    const navigate = useNavigate();
+    const {updateStudent} = useStudent();
 
-function AddStudent() {
-  const { addStudent } = useStudent();
-  const navigate = useNavigate();
+    const genderOptions = [
+        { value: "male", label: "Male" },
+        { value: "female", label: "Female" },
+    ];
+    const courseOptions = [
+        { value: "systems-engineering", label: "Systems Engineering" },
+        { value: "computer-science", label: "Computer Science" },
+        { value: "physics", label: "Physics" },
+    ];
 
-  const [file, setFile] = useState(null);
+    const facultyOptions = [
+        { value: "engineering", label: "Engineering" },
+        { value: "science", label: "Science" },
+        { value: "arts", label: "Arts" },
+    ];
 
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
-  };
+    const [file, setFile] = useState(null);
 
-  const genderOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-  ];
-  const courseOptions = [
-    { value: "systems-engineering", label: "Systems Engineering" },
-    { value: "computer-science", label: "Computer Science" },
-    { value: "physics", label: "Physics" },
-  ];
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        setFile(selectedFile);
+    };
 
-  const facultyOptions = [
-    { value: "engineering", label: "Engineering" },
-    { value: "science", label: "Science" },
-    { value: "arts", label: "Arts" },
-  ];
 
-  const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("First Name is required"),
-    lastName: Yup.string().required("Last Name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    phoneNumber: Yup.string().required("Phone Number is required"),
-    gender: Yup.string().required("Gender is required"),
-    faculty: Yup.string().required("Faculty is required"),
-    course: Yup.string().required("Course is required"),
-    location: Yup.string().required("Location is required"),
-    // file: Yup.mixed().required("Image is required"),
-  });
+    const validationSchema = Yup.object().shape({
+        firstName: Yup.string().required("First Name is required"),
+        lastName: Yup.string().required("Last Name is required"),
+        email: Yup.string().email("Invalid email").required("Email is required"),
+        phoneNumber: Yup.string().required("Phone Number is required"),
+        gender: Yup.string().required("Gender is required"),
+        faculty: Yup.string().required("Faculty is required"),
+        course: Yup.string().required("Course is required"),
+        location: Yup.string().required("Location is required"),
+      });
+    
+      const formik = useFormik({
+        initialValues: {
+          id: userAccount.id || '',
+          firstName: userAccount.firstName || "",
+          lastName: userAccount.lastName || "",
+          email: userAccount.email || "",
+          phoneNumber: userAccount.phoneNumber || "",
+          gender: userAccount.gender || "",
+          course: userAccount.course || "",
+          faculty: userAccount.faculty || "",
+          location: userAccount.location || "",
+        },
+        validationSchema,
+        onSubmit: (values) => {
+          const resp = updateStudent(values, file);
+          setFile(null);
+          navigate('/')
+        },
+      });
 
-  const formik = useFormik({
-    initialValues: {
-      id: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      gender: "",
-      course: "",
-      faculty: "",
-      location: "",
-    },
-    validationSchema,
-    onSubmit: (values) => {
-      const studentId = Math.floor(100000000 + Math.random() * 900000000);
-      const studentData = { ...values, id: studentId };
-      const resp = addStudent(studentData, file);
-      formik.resetForm();
-      setFile(null);
-      navigate(`/addsuccess/${studentId}`)
-    },
-  });
+      const handleSelectChange = (fieldName, selectedOption) => {
+            formik.setFieldValue(fieldName, selectedOption.value);
+        };
 
-  const handleSelectChange = (fieldName, selectedOption) => {
-    formik.setFieldValue(fieldName, selectedOption.value);
-  };
+
+    useEffect(() => {
+        const userData = users.filter((u) => u.id === parseInt(id));
+        if (userData) {
+          setUserAccount(userData);
+        }else{
+          toast.error("Error Invalid Student ID")
+          navigate("/")
+        }
+      },[id])
 
   return (
     <div className="">
@@ -326,7 +337,7 @@ function AddStudent() {
         </form>
       </div>
     </div>
-  );
+  )
 }
 
-export default AddStudent;
+export default EditStudent
