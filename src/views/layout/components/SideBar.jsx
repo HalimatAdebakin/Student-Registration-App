@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function SideBar() {
     return (
-        <div className="first-container flex flex-col justify-between p-4 w-1/7 rounded-2xl bg-[#143566] h-screen">
+        <div className="first-container flex flex-col justify-between p-4 w-1/7 rounded-2xl bg-[#143566] h-screen ">
           <div>
             <div className="logo border-b pb-6 border-slate-600 mb-8">
               <img className="" src={logo} alt="logo" />

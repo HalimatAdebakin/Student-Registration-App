@@ -7,21 +7,52 @@ import avatar2 from "../../images/avatar2.svg";
 import arrow from "../../images/arrow.svg";
 import { NavLink } from "react-router-dom";
 import { useStudent } from "../../context/StudentContext";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable'; 
+
 
 
 function Dashboard() {
-  const {students} = useStudent();
+  const { students } = useStudent();
 
-  const [totalNumberOfStudents, setTotalNumberOfStudents] = useState(students.length ?? 0);
+  const [totalNumberOfStudents, setTotalNumberOfStudents] = useState(
+    students.length ?? 0
+  );
   const [totalNumberOfActive, setTotalNumberOfActive] = useState(0);
   const [totalNumberOfGraduated, setTotalNumberOfGraduated] = useState(0);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredStudents = students.filter((student) => {
+    const firstName = (student?.firstName || '').toLowerCase();
+    const lastName = (student?.lastName || '').toLowerCase();
+    const id = (student?.id || '----').toString().toLowerCase();
+    const course = (student?.course || '').toLowerCase();
+    const faculty = (student?.faculty || '').toLowerCase();
+    const location = (student?.location || '').toLowerCase();
+  
+    const concatenatedString = `${firstName} ${lastName} ${id} ${course} ${faculty} ${location}`;
+  
+    return concatenatedString.includes(searchTerm.toLowerCase());
+
+  });
+  
+  const handleExportPDF = () => {
+    const pdf = new jsPDF();
+    pdf.text("Student Profiles", 90, 10);
+    pdf.autoTable({
+      head: [['Student Name', 'Student ID', 'Course', 'Faculty', 'Location']],
+      body: filteredStudents.map(student => [`${student.firstName} ${student.lastName}`, student.id, student.course, student.faculty, student.location])
+    });
+    pdf.save('student_profiles.pdf');
+  };
+
+
   // useEffect(() => {
-     
+
   // },[]);
   return (
-    <div>
-      <div className="body1 flex border-b border-[#ECEEEE]  gap-6">
+    <div className="">
+      <div className="body1 flex border-b border-[#ECEEEE]  gap-6 ">
         <div className="border-2 items-center gap-5 flex-auto flex text-white p-6 rounded-2xl bg-[#36A1C5]">
           <div className="mb-4">
             <img className="" src={frame1} alt="frame1" />
@@ -30,7 +61,9 @@ function Dashboard() {
             <div className="font-normal text-sm items-center mb-2">
               Total Number of Students
             </div>
-            <div className="font-semibold text-2xl items-center">{totalNumberOfStudents}</div>
+            <div className="font-semibold text-2xl items-center">
+              {totalNumberOfStudents}
+            </div>
           </div>
         </div>
         <div className="border-2 items-center gap-5 flex-auto flex p-6 rounded-2xl">
@@ -82,20 +115,25 @@ function Dashboard() {
               <input
                 className="focus:outline-none appearance-none"
                 type="text"
-                placeholder="Search"
+                id="search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search Students"
               />
             </div>
           </div>
         </div>
         <div className="flex gap-4">
           <div>
-            {" "}
-            <img className="" src={button} alt="frame1" />
+            <img 
+            onClick={handleExportPDF} 
+            className="" src={button} alt="frame1" />
           </div>
-          <div>
-            {" "}
-            <img className="" src={filter} alt="frame1" />
-          </div>
+          {/* <div>
+            <img 
+            onClick={''}
+            className="" src={filter} alt="frame1" />
+          </div> */}
           <NavLink
             to="/addstudent"
             className="text-white bg-[#36A1C5] border rounded-full border-[#DFE2E2] font-medium text-base py-2.5 px-3"
@@ -117,12 +155,16 @@ function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {students.map((student) => (
+            {filteredStudents.map((student) => (
               <tr key={student?.id}>
                 <td className="border-b px-4 py-2">
                   <div className="flex gap-2 items-center">
                     <div className="w-12 h-12 rounded-full">
-                      <img className="w-full h-full rounded-full" src={student.picture} alt="frame1" />
+                      <img
+                        className="w-full h-full rounded-full"
+                        src={student.picture}
+                        alt="frame1"
+                      />
                     </div>
                     <div>
                       <div className="font-medium text-sm text-[#131515]">
@@ -134,12 +176,15 @@ function Dashboard() {
                     </div>
                   </div>
                 </td>
-                <td className="border-b px-4 py-2">{student?.id ?? '----'}</td>
+                <td className="border-b px-4 py-2">{student?.id ?? "----"}</td>
                 <td className="border-b px-4 py-2">{student.course}</td>
                 <td className="border-b px-4 py-2">{student.faculty}</td>
                 <td className="border-b px-4 py-2">{student.location}</td>
                 <td className="flex items-center justify-center gap-3 px-4 py-2">
-                  <NavLink to={`/editstudent/${student.id}`} className="text-green-600">
+                  <NavLink
+                    to={`/editstudent/${student.id}`}
+                    className="text-green-600 py-2"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -151,26 +196,32 @@ function Dashboard() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     >
-                    <polygon points="13 2 3 14 12 22 21 14 11 2 13 2"></polygon>
-                  </svg>
+                      <polygon points="13 2 3 14 12 22 21 14 11 2 13 2"></polygon>
+                    </svg>
                   </NavLink>
-                  <span className="text-red-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="3" y="6" width="18" height="12" rx="2" ry="2"></rect>
-                    <line x1="9" y1="3" x2="9" y2="21"></line>
-                    <line x1="15" y1="3" x2="15" y2="21"></line>
-                  </svg>
-
+                  <span className="text-red-600 py-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect
+                        x="3"
+                        y="6"
+                        width="18"
+                        height="12"
+                        rx="2"
+                        ry="2"
+                      ></rect>
+                      <line x1="9" y1="3" x2="9" y2="21"></line>
+                      <line x1="15" y1="3" x2="15" y2="21"></line>
+                    </svg>
                   </span>
                 </td>
               </tr>

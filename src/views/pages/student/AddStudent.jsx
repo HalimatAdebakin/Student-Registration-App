@@ -25,7 +25,7 @@ function AddStudent() {
   const courseOptions = [
     { value: "systems-engineering", label: "Systems Engineering" },
     { value: "computer-science", label: "Computer Science" },
-    { value: "physics", label: "Physics" },
+    { value: "economics", label: "Economics" },
   ];
 
   const facultyOptions = [
@@ -75,7 +75,7 @@ function AddStudent() {
 
   return (
     <div className="">
-      <div className="mx-auto items-center rounded-2xl p-6 bg-[white] pt-10 w-[730px]">
+      <div className="mx-auto items-center rounded-2xl p-6 bg-[white] pt-10 w-[730px] border-2 border-[#ECEEEE]">
         <h2 className="text-base text-[#131515] text-center font-medium mb-4">
           Basic Information
         </h2>
@@ -113,7 +113,7 @@ function AddStudent() {
               </div>
             <div className="mb-6">
               <div className="text-sm font-medium text-[#FF7A21]">
-                Upload Logo
+                Upload Photo
               </div>
               <div className="font-normal text-xs mt-0.5">
                 Format - jpg & png
@@ -318,9 +318,9 @@ function AddStudent() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-[#ABD9E8] text-white text-base font-medium px-4 py-2 w-28 rounded-full focus:outline-none"
+              className="bg-[#36A1C5] text-white text-base font-medium px-4 py-2  rounded-full focus:outline-none"
             >
-              Save
+              Save Details
             </button>
           </div>
         </form>

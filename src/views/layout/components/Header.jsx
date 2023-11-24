@@ -13,7 +13,7 @@ function Header() {
             </div>
             <div>
               <div className="font-medium text-sm text-[#131515]">
-                Jaiyeola Muhandis
+                Hussein Adebakin
               </div>
               <div className="text-right text-sm font-normal text-[#748181]">
                 Admin

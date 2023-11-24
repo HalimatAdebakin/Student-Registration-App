@@ -11,6 +11,7 @@ import StudentProfile from "../views/pages/student/StudentProfile";
 import DashboardSkeleton from "../views/skeleton/DashboardSkeleton";
 import Menu from "../views/pages/dropdown/Menu";
 import EditStudent from "../views/pages/student/EditStudent";
+import Logout from "../views/pages/auth/Logout";
 
 
 
@@ -41,6 +42,7 @@ const createRoute = (path, element, pageName, privateRoute = true, skeleton = Da
     createRoute("/profile", StudentProfile, "student profile", true),
     createRoute("/delete", DeleteStudent, "delete student", true),
     createRoute("/menu", Menu, "menu", true),
+    createRoute("/logout", Logout, "Logout", true),
    
   
   ];
