@@ -139,7 +139,7 @@ function Dashboard() {
                 <td className="border-b px-4 py-2">{student.faculty}</td>
                 <td className="border-b px-4 py-2">{student.location}</td>
                 <td className="flex items-center justify-center gap-3 px-4 py-2">
-                  <span className="text-green-600">
+                  <NavLink to={`/editstudent/${student.id}`} className="text-green-600">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -153,7 +153,7 @@ function Dashboard() {
                     >
                     <polygon points="13 2 3 14 12 22 21 14 11 2 13 2"></polygon>
                   </svg>
-                  </span>
+                  </NavLink>
                   <span className="text-red-600">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
