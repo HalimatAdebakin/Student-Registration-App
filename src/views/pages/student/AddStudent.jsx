@@ -12,9 +12,10 @@ function AddStudent() {
   const navigate = useNavigate();
 
   const webcamRef = useRef(null);
-  const [imgSrc, setImgSrc] = useState(null);
+  const [imgSrc, setImgSrc] = useState("");
 
-  const capture = useCallback(() => {
+  const capture = useCallback((event) => {
+    event.preventDefault();
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
       setImgSrc(imageSrc);
@@ -23,20 +24,24 @@ function AddStudent() {
     }
   }, [webcamRef, setImgSrc]);
 
-  const retake = () => {
-    setImgSrc(null);
-  };
-
+  const retake = useCallback(() => {
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot();
+      setImgSrc(imageSrc);
+    } else {
+      console.error("webcamRef is null");
+    }
+  }, [webcamRef, setImgSrc]);
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
   ];
   const courseOptions = [
-    { value: "Systems-engineering", label: "Systems Engineering" },
-    { value: "Computer-science", label: "Computer Science" },
+    { value: "Systems", label: "Systems" },
+    { value: "Computer", label: "Computer" },
     { value: "Economics", label: "Economics" },
     { value: "Law", label: "Law" },
-    { value: "Biology Edu", label: "Biology Edu" },
+    { value: "Biology", label: "Biology" },
   ];
 
   const facultyOptions = [
@@ -69,13 +74,12 @@ function AddStudent() {
       course: "",
       faculty: "",
       location: "",
-      image: imgSrc,
     },
     validationSchema,
     onSubmit: (values) => {
       const studentId = Math.floor(100000000 + Math.random() * 900000000);
-      const studentData = { ...values, id: studentId, picture: values.image };
-      const resp = addStudent(studentData, values.image);
+      const studentData = { ...values, id: studentId };
+      addStudent(studentData, imgSrc);
       formik.resetForm();
       setImgSrc(null);
       navigate(`/addsuccess/${studentId}`);
@@ -109,9 +113,9 @@ function AddStudent() {
             </div>
             <div className=" bg-[#36A1C5] border rounded-full w-20 p-2">
               {imgSrc ? (
-                <button onClick={retake}>Retake</button>
+                <button type="button" onClick={retake}>Retake</button>
               ) : (
-                <button onClick={capture}>Capture</button>
+                <button type="button" onClick={capture}>Capture</button>
               )}
             </div>
           </div>

@@ -11,10 +11,10 @@ import { toast } from "react-toastify";
 
 function Dashboard() {
   const { students, deleteStudent } = useStudent();
-  const { blacklistStudent, student } = useStudent();
+  const { blacklistStudent} = useStudent();
  const navigate = useNavigate()
 
-  const [totalNumberOfStudents, setTotalNumberOfStudents] = useState(
+  const [totalNumberOfStudents] = useState(
     students.length ?? 0
   );
  
@@ -199,7 +199,7 @@ function Dashboard() {
                     <div className="w-12 h-12 rounded-full">
                       <img
                         className="w-full h-full rounded-full"
-                        src={`data:image/png;base64,${student.image}`}
+                        src={student.picture}
                         alt="frame1"
                       />
                     </div>

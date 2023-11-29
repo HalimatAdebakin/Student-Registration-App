@@ -50,38 +50,23 @@ export const StudentProvider = ({ children }) => {
     localStorage.setItem("students", JSON.stringify(updatedStudents));
     console.log("Local storage updated:", updatedStudents);
 
-    // Read the file as a data URL
-    // reader.readAsDataURL(file);
+   
 
     toast.success("Student Added Successfully");
   };
 
-  const updateStudent = (updatedStudent, file) => {
-    // Ensure the file is a valid Blob object
+  const updateStudent = (updatedStudent) => {
+    // Dispatch the update action
+    dispatch({ type: "UPDATE_STUDENT", payload: updatedStudent });
   
-      
-     
-       
-        // Update student with new image URL
-        const studentWithImage = {
-          ...updatedStudent,
-          file, // Assuming imageUrl is the correct field name
-          blacklisted: updatedStudent.blacklisted,
-        };
+    // Update local storage with the updated student data.
+    const updatedStudents = students.map((student) =>
+      student.id === updatedStudent.id ? updatedStudent : student
+    );
+    localStorage.setItem("students", JSON.stringify(updatedStudents));
   
-        // Dispatch the update action
-        dispatch({ type: "UPDATE_STUDENT", payload: studentWithImage });
-  
-        // Update local storage with the updated student data.
-        const updatedStudents = students.map((student) =>
-          student.id === updatedStudent.id ? studentWithImage : student
-        );
-        localStorage.setItem("students", JSON.stringify(updatedStudents));
-  
-        toast.success("Student Profile Updated Successfully");
-      };
-
-    
+    toast.success("Student Profile Updated Successfully");
+  };
   
 
   const deleteStudent = (studentId) => {
