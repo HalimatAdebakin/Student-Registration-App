@@ -12,13 +12,21 @@ import { toast } from "react-toastify";
 function Dashboard() {
   const { students, deleteStudent } = useStudent();
   const { blacklistStudent, student } = useStudent();
- const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [totalNumberOfStudents, setTotalNumberOfStudents] = useState(
     students.length ?? 0
   );
-  const [totalNumberOfActive, setTotalNumberOfActive] = useState(0);
-  const [totalNumberOfGraduated, setTotalNumberOfGraduated] = useState(0);
+  const [totalNumberOfActive, setActiveStudents] = useState([]);
+
+
+  
+  const [blacklistedStudents, setBlacklistedStudents] = useState([]);
+
+  const [
+    totalNumberOfBlacklistedStudents,
+    setTotalNumberOfBlacklistedStudents,
+  ] = useState(0);
 
   const [searchTerm, setSearchTerm] = useState("");
   const filteredStudents = students.filter((student) => {
@@ -38,7 +46,16 @@ function Dashboard() {
     const pdf = new jsPDF();
     pdf.text("Student Profiles", 90, 10);
     pdf.autoTable({
-      head: [["Student Name", "Student Email", "Student ID", "Course", "Faculty", "Location"]],
+      head: [
+        [
+          "Student Name",
+          "Student Email",
+          "Student ID",
+          "Course",
+          "Faculty",
+          "Location",
+        ],
+      ],
       body: filteredStudents.map((student) => [
         `${student.firstName} ${student.lastName}`,
         student.email,
@@ -50,20 +67,33 @@ function Dashboard() {
     });
     pdf.save("student_profiles.pdf");
   };
- 
-  const  deleteDetails = (studentId, fName, lName) => {
-      navigate("/deletestudent", { state: {studentId, fName, lName}})
-  }
+
+  const deleteDetails = (studentId, fName, lName) => {
+    navigate("/deletestudent", { state: { studentId, fName, lName } });
+  };
   const deletSingleStudent = async (studentId) => {
     await deleteStudent(studentId);
     toast.success("Student Successfully Deleted");
   };
 
-  const handleBlacklist = () => {
-    if (student) {
-      const studentId = student.id;
+  const handleBlacklist = (studentId) => {
+    if (studentId) {
+      const isBlacklisted = blacklistedStudents.includes(studentId);
+
+      if (isBlacklisted) {
+        // If blacklisted, remove from the blacklist
+        setBlacklistedStudents(
+          blacklistedStudents.filter((id) => id !== studentId)
+        );
+        setTotalNumberOfBlacklistedStudents(blacklistedStudents.length - 1);
+      } else {
+        // If not blacklisted, add to the blacklist
+        setBlacklistedStudents([...blacklistedStudents, studentId]);
+        setTotalNumberOfBlacklistedStudents(blacklistedStudents.length + 1);
+      }
+
+      // Call the blacklistStudent function
       blacklistStudent(studentId);
-      // Additional logic or UI updates related to blacklisting
     } else {
       console.error("No student selected for blacklisting.");
     }
@@ -91,7 +121,7 @@ function Dashboard() {
           </div>
           <div className="">
             <div className="font-normal text-sm items-center mb-2 text-[#748181]">
-              Active Students
+              Total Number of Active Students
             </div>
             <div className="font-semibold text-2xl items-center text-[#131515]">
               {totalNumberOfActive}
@@ -104,10 +134,10 @@ function Dashboard() {
           </div>
           <div className="">
             <div className="font-normal text-sm items-center mb-2 text-[#748181]">
-              Blacklisted Students
+              Total Number of Blacklisted Students
             </div>
             <div className="font-semibold text-2xl items-center text-[#131515]">
-              {totalNumberOfGraduated}
+              {totalNumberOfBlacklistedStudents}
             </div>
           </div>
         </div>
@@ -224,7 +254,13 @@ function Dashboard() {
                     <i className="fa-solid fa-pen-to-square"></i>
                   </NavLink>
                   <span
-                    onClick={() => deleteDetails(student.id, student.firstName, student.lastName)}
+                    onClick={() =>
+                      deleteDetails(
+                        student.id,
+                        student.firstName,
+                        student.lastName
+                      )
+                    }
                     className="text-red-600 py-2"
                   >
                     <i className="fa-solid fa-trash"></i>
@@ -232,7 +268,7 @@ function Dashboard() {
                   <span className="py-2">
                     <i
                       className="fa-solid fa-ban"
-                      onClick={handleBlacklist}
+                      onClick={() => handleBlacklist(student.id)}
                     ></i>
                   </span>
                 </td>

@@ -17,10 +17,11 @@ const studentsReducer = (state, action) => {
       return state.filter((student) => student.id !== action.payload);
     default:
       return state;
+
     case "BLACKLIST_STUDENT":
       return state.map((student) =>
         student.id === action.payload
-          ? { ...student, blacklisted: true }
+          ? { ...student, blacklisted: ! student.blacklisted  }
           : student
       );
   }
