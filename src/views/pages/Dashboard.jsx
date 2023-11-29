@@ -38,7 +38,7 @@ function Dashboard() {
     pdf.autoTable({
       head: [["Student Picture", "Student Name", "Student Email", "Student ID", "Course", "Faculty", "Location"]],
       body: filteredStudents.map((student) => [
-        student.picture,
+       
         `${student.firstName} ${student.lastName}`,
         student.email,
         student.id,
