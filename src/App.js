@@ -7,12 +7,15 @@ import { useAuth } from './context/AuthContext';
 import Error_404 from './views/Errors/Error_404';
 import LoadingSpinner from './views/miscellaneous/LoadingSpinner';
 
+
+
 function App() {
   const { loading } = useAuth();
 
   return (
     <BrowserRouter>
       <ToastContainer />
+
         {loading ? (
             <LoadingSpinner />
           ) : (

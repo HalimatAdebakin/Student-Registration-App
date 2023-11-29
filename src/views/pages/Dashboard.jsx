@@ -2,18 +2,15 @@ import React, { useEffect, useState } from "react";
 import frame1 from "../../images/frame1.svg";
 import frame2 from "../../images/frame2.svg";
 import button from "../../images/Button.svg";
-import filter from "../../images/filter.svg";
-import avatar2 from "../../images/avatar2.svg";
-import arrow from "../../images/arrow.svg";
 import { NavLink } from "react-router-dom";
 import { useStudent } from "../../context/StudentContext";
-import jsPDF from 'jspdf';
-import 'jspdf-autotable'; 
-
-
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import { toast } from "react-toastify";
 
 function Dashboard() {
-  const { students } = useStudent();
+  const { students, deleteStudent } = useStudent();
+  const { blacklistStudent, student } = useStudent();
 
   const [totalNumberOfStudents, setTotalNumberOfStudents] = useState(
     students.length ?? 0
@@ -23,37 +20,54 @@ function Dashboard() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const filteredStudents = students.filter((student) => {
-    const firstName = (student?.firstName || '').toLowerCase();
-    const lastName = (student?.lastName || '').toLowerCase();
-    const id = (student?.id || '----').toString().toLowerCase();
-    const course = (student?.course || '').toLowerCase();
-    const faculty = (student?.faculty || '').toLowerCase();
-    const location = (student?.location || '').toLowerCase();
-  
-    const concatenatedString = `${firstName} ${lastName} ${id} ${course} ${faculty} ${location}`;
-  
-    return concatenatedString.includes(searchTerm.toLowerCase());
+    const firstName = (student?.firstName || "").toLowerCase();
+    const lastName = (student?.lastName || "").toLowerCase();
+    const id = (student?.id || "----").toString().toLowerCase();
+    const course = (student?.course || "").toLowerCase();
+    const faculty = (student?.faculty || "").toLowerCase();
+    const location = (student?.location || "").toLowerCase();
 
+    const concatenatedString = `${firstName} ${lastName} ${id} ${course} ${faculty} ${location}`;
+
+    return concatenatedString.includes(searchTerm.toLowerCase());
   });
-  
+
   const handleExportPDF = () => {
     const pdf = new jsPDF();
     pdf.text("Student Profiles", 90, 10);
     pdf.autoTable({
-      head: [['Student Name', 'Student ID', 'Course', 'Faculty', 'Location']],
-      body: filteredStudents.map(student => [`${student.firstName} ${student.lastName}`, student.id, student.course, student.faculty, student.location])
+      head: [["Student Picture", "Student Name", "Student Email", "Student ID", "Course", "Faculty", "Location"]],
+      body: filteredStudents.map((student) => [
+        student.picture,
+        `${student.firstName} ${student.lastName}`,
+        student.email,
+        student.id,
+        student.course,
+        student.faculty,
+        student.location,
+      ]),
     });
-    pdf.save('student_profiles.pdf');
+    pdf.save("student_profiles.pdf");
   };
 
+  const deletSingleStudent = async (studentId) => {
+    await deleteStudent(studentId);
+    toast.success("Student Successfully Deleted");
+  };
 
-  // useEffect(() => {
+  const handleBlacklist = () => {
+    if (student) {
+      blacklistStudent(student.id);
+      // Additional logic or UI updates related to blacklisting
+    } else {
+      console.error("No student selected for blacklisting.");
+    }
+  };
 
-  // },[]);
   return (
-    <div className="">
-      <div className="body1 flex border-b border-[#ECEEEE]  gap-6 ">
-        <div className="border-2 items-center gap-5 flex-auto flex text-white p-6 rounded-2xl bg-[#36A1C5]">
+    <div className="w-full cursor-pointer">
+      <div className="body1 w-full flex flex-col lg:flex-row border-b border-[#ECEEEE]  gap-6 ">
+        <div className="border-2 items-center gap-5 w-full flex-auto flex text-white p-6 rounded-2xl bg-[#36A1C5]">
           <div className="mb-4">
             <img className="" src={frame1} alt="frame1" />
           </div>
@@ -66,7 +80,7 @@ function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="border-2 items-center gap-5 flex-auto flex p-6 rounded-2xl">
+        <div className="border-2 items-center gap-5 w-full flex-auto flex p-6 rounded-2xl">
           <div className="mb-4">
             <img className="" src={frame2} alt="frame2" />
           </div>
@@ -79,13 +93,13 @@ function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="border-2 items-center gap-5 flex-auto flex p-6 rounded-2xl">
+        <div className="border-2 items-center gap-5 w-full flex-auto flex p-6 rounded-2xl">
           <div className="mb-4">
             <img className="" src={frame2} alt="frame2" />
           </div>
           <div className="">
             <div className="font-normal text-sm items-center mb-2 text-[#748181]">
-              Graduated Students
+              Blacklisted Students
             </div>
             <div className="font-semibold text-2xl items-center text-[#131515]">
               {totalNumberOfGraduated}
@@ -93,10 +107,10 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="body2 flex h-10 justify-between items-center mt-4 pl-6">
-        <div className="flex text-[#131515] text-base font-semibold gap-4 items-center">
+      <div className="body2 lg:flex h-10 justify-between items-center mt-4 pl-6">
+        <div className="flex mb-4 lg:mb-0 text-[#131515] text-base font-semibold gap-4 items-center">
           <div>Student Lists</div>
-          <div className="flex gap-2 items-center border rounded-full border-[#DFE2E2] p-4 w-72">
+          <div className="flex gap-2 items-center border rounded-full border-[#DFE2E2] p-4 w-56 md:w-72">
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -123,17 +137,15 @@ function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-4 justify-between lg:justify-normal">
           <div>
-            <img 
-            onClick={handleExportPDF} 
-            className="" src={button} alt="frame1" />
+            <img
+              onClick={handleExportPDF}
+              className=""
+              src={button}
+              alt="frame1"
+            />
           </div>
-          {/* <div>
-            <img 
-            onClick={''}
-            className="" src={filter} alt="frame1" />
-          </div> */}
           <NavLink
             to="/addstudent"
             className="text-white bg-[#36A1C5] border rounded-full border-[#DFE2E2] font-medium text-base py-2.5 px-3"
@@ -142,27 +154,38 @@ function Dashboard() {
           </NavLink>
         </div>
       </div>
-      <div className="body3 mt-4 p-6">
+      <div className="body3 mt-20 lg:mt-4 p-6 relative w-full overflow-x-hidden">
         <table className="min-w-full border-b border-[#ECEEEE] text-base font-normal text-[#748181]">
           <thead>
             <tr>
-              <th className="border-b px-4 py-2">Student Name</th>
-              <th className="border-b px-4 py-2">Student ID</th>
-              <th className="border-b px-4 py-2">Course</th>
-              <th className="border-b px-4 py-2">Faculty</th>
-              <th className="border-b px-4 py-2">Location</th>
+              <th className="border-b px-4 py-2 text-left">Student Name</th>
+              <th className="hidden md:table-cell border-b px-4 py-2 text-left">
+                Student ID
+              </th>
+              <th className="hidden lg:table-cell border-b px-4 py-2 text-left">
+                Course
+              </th>
+              <th className="hidden lg:table-cell border-b px-4 py-2 text-left">
+                Faculty
+              </th>
+              <th className="hidden lg:table-cell border-b px-4 py-2 text-left">
+                Location
+              </th>
               <th className="border-b px-4 py-2">Action</th>
             </tr>
           </thead>
           <tbody>
             {filteredStudents.map((student) => (
-              <tr key={student?.id}>
+              <tr
+                key={student?.id}
+                className={student.blacklisted ? "blacklisted opacity-100" : ""}
+              >
                 <td className="border-b px-4 py-2">
                   <div className="flex gap-2 items-center">
                     <div className="w-12 h-12 rounded-full">
                       <img
                         className="w-full h-full rounded-full"
-                        src={student.picture}
+                        src={`data:image/png;base64,${student.picture}`}
                         alt="frame1"
                       />
                     </div>
@@ -176,52 +199,36 @@ function Dashboard() {
                     </div>
                   </div>
                 </td>
-                <td className="border-b px-4 py-2">{student?.id ?? "----"}</td>
-                <td className="border-b px-4 py-2">{student.course}</td>
-                <td className="border-b px-4 py-2">{student.faculty}</td>
-                <td className="border-b px-4 py-2">{student.location}</td>
+                <td className="border-b px-4 py-2 hidden md:table-cell">
+                  {student?.id ?? "----"}
+                </td>
+                <td className="border-b px-4 py-2 hidden lg:table-cell">
+                  {student.course}
+                </td>
+                <td className="border-b px-4 py-2 hidden lg:table-cell">
+                  {student.faculty}
+                </td>
+                <td className="border-b px-4 py-2 hidden lg:table-cell">
+                  {student.location}
+                </td>
                 <td className="flex items-center justify-center gap-3 px-4 py-2">
                   <NavLink
                     to={`/editstudent/${student.id}`}
                     className="text-green-600 py-2"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polygon points="13 2 3 14 12 22 21 14 11 2 13 2"></polygon>
-                    </svg>
+                    <i class="fa-solid fa-pen-to-square"></i>
                   </NavLink>
-                  <span className="text-red-600 py-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect
-                        x="3"
-                        y="6"
-                        width="18"
-                        height="12"
-                        rx="2"
-                        ry="2"
-                      ></rect>
-                      <line x1="9" y1="3" x2="9" y2="21"></line>
-                      <line x1="15" y1="3" x2="15" y2="21"></line>
-                    </svg>
+                  <span
+                    onClick={() => deletSingleStudent(student.id)}
+                    className="text-red-600 py-2"
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </span>
+                  <span className="py-2">
+                    <i
+                      className="fa-solid fa-ban"
+                      onClick={handleBlacklist}
+                    ></i>
                   </span>
                 </td>
               </tr>

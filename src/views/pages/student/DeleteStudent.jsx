@@ -1,6 +1,21 @@
 import React from "react";
+import { toast } from "react-toastify";
+import { NavLink } from "react-router-dom";
+import { useStudent } from "../../../context/StudentContext";
 
 function DeleteStudent() {
+  const { student, deleteStudent } = useStudent(); 
+
+  const deleteSingleStudent = async () => {
+    if (student) {
+      await deleteStudent(student.id);
+      toast.success("Student Successfully Deleted");
+    } else {
+      // Handle the case where student is undefined
+      console.error("Student is undefined");
+    }
+  };
+
   return (
     <div>
       <div className="mx-auto rounded-2xl p-6 bg-[white] w-[365px]  border-2 border-[#ECEEEE]">
@@ -25,20 +40,23 @@ function DeleteStudent() {
         <div className="flex justify-end gap-8 mt-12 border-t-2 p-6">
         <div className="">
             <button
+             onClick={() => deleteSingleStudent(student.id)}
               type="submit"
               className="bg-[white] text-[#748181] border-2 border-[#ECEEEE] text-base font-medium w-full rounded-full focus:outline-none px-9 py-3"
             >
               Delete
             </button>
           </div>
-          <div className="">
+          <NavLink
+          to="/"
+           className="">
             <button
               type="submit"
               className="bg-[#36A1C5] text-white text-base font-medium w-full rounded-full focus:outline-none px-9 py-3"
             >
               Cancel
             </button>
-          </div>
+            </NavLink>
         </div>
       </div>
     </div>

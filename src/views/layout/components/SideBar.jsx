@@ -1,10 +1,11 @@
 import React from 'react'
 import logo from "../../../images/logo.svg";
-import { Link } from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 function SideBar() {
+  const { logout } = useAuth();
     return (
-        <div className="first-container flex flex-col justify-between p-4 w-1/7 rounded-2xl bg-[#143566] h-screen ">
+        <div className="hidden xl:flex first-container flex-col justify-between p-4 w-1/7 rounded-2xl bg-[#143566] h-screen">
           <div>
             <div className="logo border-b pb-6 border-slate-600 mb-8">
               <img className="" src={logo} alt="logo" />
@@ -24,7 +25,10 @@ function SideBar() {
                   />
                 </svg>
               </div>
-              <div className="text-white text-sm font-normal">Dashboard</div>
+              <NavLink
+               to="/">
+              <div className="text-white text-sm font-normal cursor-pointer">Dashboard</div>
+              </NavLink>
             </div>
           </div>
           <div className="border-t pt-6 border-slate-600">
@@ -43,8 +47,8 @@ function SideBar() {
                   />
                 </svg>
               </div>
-              <div className="text-white text-sm font-normal flex gap-14">
-                Settings{" "}
+              <div className="text-white text-sm font-normal flex gap-14 cursor-pointer">
+                Settings
                 <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -76,8 +80,8 @@ function SideBar() {
                   />
                 </svg>
               </div>
-              <div className="text-white text-sm font-normal">
-                <Link to="/logout"> Logout</Link>
+              <div className="text-white text-sm font-normal cursor-pointer">
+                <div onClick={logout}> Logout</div>
               </div>
             </div>
           </div>

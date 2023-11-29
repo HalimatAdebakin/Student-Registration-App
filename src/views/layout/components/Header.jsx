@@ -5,13 +5,13 @@ import notification from "../../../images/notifications.svg";
 function Header() {
     return (
         <div className="header flex items-center gap-6 py-4 px-6  border-b border-[#ECEEEE]">
-            <div className="flex-auto font-semibold text-lg text-[#131515]">
+            <div className="flex-auto whitespace-nowrap font-semibold text-lg text-[#131515]">
               Student Management
             </div>
-            <div className="flex-auto flex justify-end">
+            <div className="hidden flex-auto md:flex justify-end">
               <img className="" src={notification} alt="notification" />
             </div>
-            <div>
+            <div className='hidden md:block'>
               <div className="font-medium text-sm text-[#131515]">
                 Hussein Adebakin
               </div>
@@ -19,8 +19,14 @@ function Header() {
                 Admin
               </div>
             </div>
-            <div>
-              <img className="" src={avatar} alt="avater" />
+            <div className='w-fit'>
+              <div className='w-full flex md:block items-center justify-between'>
+                <img className="md:hidden" src={notification} alt="notification" />
+                <img className="ml-auto mr-0" src={avatar} alt="avater" />
+              </div>
+              <div className="md:hidden font-medium whitespace-nowrap text-sm text-[#131515]">
+                Hussein Adebakin
+              </div>
             </div>
         </div>
     )
