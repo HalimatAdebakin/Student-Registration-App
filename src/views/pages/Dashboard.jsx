@@ -36,9 +36,8 @@ function Dashboard() {
     const pdf = new jsPDF();
     pdf.text("Student Profiles", 90, 10);
     pdf.autoTable({
-      head: [["Student Picture", "Student Name", "Student Email", "Student ID", "Course", "Faculty", "Location"]],
+      head: [["Student Name", "Student Email", "Student ID", "Course", "Faculty", "Location"]],
       body: filteredStudents.map((student) => [
-       
         `${student.firstName} ${student.lastName}`,
         student.email,
         student.id,
