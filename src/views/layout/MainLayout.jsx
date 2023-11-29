@@ -25,7 +25,7 @@ function MainLayout({ children, config, userData}) {
             })}
 
           </div>
-          <div className='xl:hidden fixed bottom-0 left-0 w-full text-lg bg-[#143566] text-white p-4 cursor-pointer gap-6 '>
+          <div className='xl:hidden fixed bottom-0 left-0 w-full text-lg bg-[#143566] text-white p-4 cursor-pointer gap-6 mt-6'>
           <NavLink
                to="/">
               <div className="text-white font-normal cursor-pointer">Dashboard</div>
