@@ -12,21 +12,19 @@ import { toast } from "react-toastify";
 function Dashboard() {
   const { students, deleteStudent } = useStudent();
   const { blacklistStudent, student } = useStudent();
-  const navigate = useNavigate();
+ const navigate = useNavigate()
 
   const [totalNumberOfStudents, setTotalNumberOfStudents] = useState(
     students.length ?? 0
   );
-  const [totalNumberOfActive, setActiveStudents] = useState([]);
-
-
-  
+ 
+  const initialBlacklistedStudents = JSON.parse(localStorage.getItem('blacklistedStudents')) || [];
   const [blacklistedStudents, setBlacklistedStudents] = useState([]);
 
-  const [
-    totalNumberOfBlacklistedStudents,
-    setTotalNumberOfBlacklistedStudents,
-  ] = useState(0);
+  
+  const [totalNumberOfBlacklistedStudents, setTotalNumberOfBlacklistedStudents] =useState(initialBlacklistedStudents.length);
+
+ 
 
   const [searchTerm, setSearchTerm] = useState("");
   const filteredStudents = students.filter((student) => {
@@ -46,16 +44,7 @@ function Dashboard() {
     const pdf = new jsPDF();
     pdf.text("Student Profiles", 90, 10);
     pdf.autoTable({
-      head: [
-        [
-          "Student Name",
-          "Student Email",
-          "Student ID",
-          "Course",
-          "Faculty",
-          "Location",
-        ],
-      ],
+      head: [["Student Name", "Student Email", "Student ID", "Course", "Faculty", "Location"]],
       body: filteredStudents.map((student) => [
         `${student.firstName} ${student.lastName}`,
         student.email,
@@ -67,14 +56,19 @@ function Dashboard() {
     });
     pdf.save("student_profiles.pdf");
   };
-
-  const deleteDetails = (studentId, fName, lName) => {
-    navigate("/deletestudent", { state: { studentId, fName, lName } });
-  };
+ 
+  const  deleteDetails = (studentId, fName, lName) => {
+      navigate("/deletestudent", { state: {studentId, fName, lName}})
+  }
   const deletSingleStudent = async (studentId) => {
     await deleteStudent(studentId);
     toast.success("Student Successfully Deleted");
   };
+
+  useEffect(() => {
+    localStorage.setItem('blacklistedStudents', JSON.stringify(blacklistedStudents));
+  }, [blacklistedStudents]);
+
 
   const handleBlacklist = (studentId) => {
     if (studentId) {
@@ -82,9 +76,7 @@ function Dashboard() {
 
       if (isBlacklisted) {
         // If blacklisted, remove from the blacklist
-        setBlacklistedStudents(
-          blacklistedStudents.filter((id) => id !== studentId)
-        );
+        setBlacklistedStudents(blacklistedStudents.filter(id => id !== studentId));
         setTotalNumberOfBlacklistedStudents(blacklistedStudents.length - 1);
       } else {
         // If not blacklisted, add to the blacklist
@@ -112,19 +104,6 @@ function Dashboard() {
             </div>
             <div className="font-semibold text-2xl items-center">
               {totalNumberOfStudents}
-            </div>
-          </div>
-        </div>
-        <div className="border-2 items-center gap-5 w-full flex-auto flex p-6 rounded-2xl">
-          <div className="mb-4">
-            <img className="" src={frame2} alt="frame2" />
-          </div>
-          <div className="">
-            <div className="font-normal text-sm items-center mb-2 text-[#748181]">
-              Total Number of Active Students
-            </div>
-            <div className="font-semibold text-2xl items-center text-[#131515]">
-              {totalNumberOfActive}
             </div>
           </div>
         </div>
@@ -254,20 +233,14 @@ function Dashboard() {
                     <i className="fa-solid fa-pen-to-square"></i>
                   </NavLink>
                   <span
-                    onClick={() =>
-                      deleteDetails(
-                        student.id,
-                        student.firstName,
-                        student.lastName
-                      )
-                    }
+                    onClick={() => deleteDetails(student.id, student.firstName, student.lastName)}
                     className="text-red-600 py-2"
                   >
                     <i className="fa-solid fa-trash"></i>
                   </span>
                   <span className="py-2">
                     <i
-                      className="fa-solid fa-ban"
+                      className="fa-solid fa-ban text-black"
                       onClick={() => handleBlacklist(student.id)}
                     ></i>
                   </span>
