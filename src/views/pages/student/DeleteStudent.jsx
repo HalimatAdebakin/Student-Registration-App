@@ -1,18 +1,21 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useStudent } from "../../../context/StudentContext";
 
 function DeleteStudent() {
-  const { student, deleteStudent } = useStudent(); 
+  const { deleteStudent } = useStudent();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const deleteSingleStudent = async () => {
-    if (student) {
-      await deleteStudent(student.id);
-      toast.success("Student Successfully Deleted");
-    } else {
+    try {
+      await deleteStudent(location.state.studentId);
+        toast.success("Student Successfully Deleted")
+          navigate("/");
+    } catch (error) {
       // Handle the case where student is undefined
-      console.error("Student is undefined");
+      
     }
   };
 
@@ -34,29 +37,35 @@ function DeleteStudent() {
           </svg>
         </div>
         <div className="">
-          <div className="text-[#131515] text-center mt-8 text-lg font-semibold">Delete Student?</div>
-          <div className="text-base font-medium text-[#748181] text-center mt-2">Are you sure you want to delete the account of <span>HUSSEIN ADEBAKIN?</span> Kindly note this action is irreversible</div>
+          <div className="text-[#131515] text-center mt-8 text-lg font-semibold">
+            Delete Student?
+          </div>
+          <div className="text-base font-medium text-[#748181] text-center mt-2">
+            Are you sure you want to delete the account of{" "}
+            <span>
+              {location.state.fName} {location.state.lName}?
+            </span>{" "}
+            Kindly note this action is irreversible
+          </div>
         </div>
         <div className="flex justify-end gap-8 mt-12 border-t-2 p-6">
-        <div className="">
+          <div className="">
             <button
-             onClick={() => deleteSingleStudent(student.id)}
+              onClick={() => deleteSingleStudent()}
               type="submit"
               className="bg-[white] text-[#748181] border-2 border-[#ECEEEE] text-base font-medium w-full rounded-full focus:outline-none px-9 py-3"
             >
               Delete
             </button>
           </div>
-          <NavLink
-          to="/"
-           className="">
+          <NavLink to="/" className="">
             <button
               type="submit"
               className="bg-[#36A1C5] text-white text-base font-medium w-full rounded-full focus:outline-none px-9 py-3"
             >
               Cancel
             </button>
-            </NavLink>
+          </NavLink>
         </div>
       </div>
     </div>

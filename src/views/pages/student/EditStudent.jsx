@@ -102,8 +102,8 @@ function EditStudent() {
             !userAccount ? <div>Please wait page loading.......</div> : 
             (
                 <div className="">
-                    <div className="mx-auto items-center rounded-2xl p-6 bg-[white] pt-10 w-[730px] border-2 border-[#ECEEEE]">
-                        <h2 className="text-base text-[#131515] text-center font-medium mb-4">
+                    <div className="mx-auto items-center rounded-2xl p-6 bg-[white] pt-10 w-full lg:w-[730px] border-2 border-[#ECEEEE]">
+                        <h2 className="text-base text-[#131515] text-center font-medium mb-6 md:mb-2">
                         Basic Information
                         </h2>
                         <form onSubmit={formik.handleSubmit}>
@@ -129,7 +129,7 @@ function EditStudent() {
               )}
             </div>
           </div>
-                        <div className="mb-4 flex gap-6">
+                        <div className="mb-4 md:flex gap-6">
                             <div className="flex-auto">
                             <label
                                 className="block text-[#748181] text-sm font-bold mb-2"

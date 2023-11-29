@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+
 import frame1 from "../../images/frame1.svg";
 import frame2 from "../../images/frame2.svg";
 import button from "../../images/Button.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useStudent } from "../../context/StudentContext";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -11,6 +12,7 @@ import { toast } from "react-toastify";
 function Dashboard() {
   const { students, deleteStudent } = useStudent();
   const { blacklistStudent, student } = useStudent();
+ const navigate = useNavigate()
 
   const [totalNumberOfStudents, setTotalNumberOfStudents] = useState(
     students.length ?? 0
@@ -48,7 +50,10 @@ function Dashboard() {
     });
     pdf.save("student_profiles.pdf");
   };
-
+ 
+  const  deleteDetails = (studentId, fName, lName) => {
+      navigate("/deletestudent", { state: {studentId, fName, lName}})
+  }
   const deletSingleStudent = async (studentId) => {
     await deleteStudent(studentId);
     toast.success("Student Successfully Deleted");
@@ -56,7 +61,8 @@ function Dashboard() {
 
   const handleBlacklist = () => {
     if (student) {
-      blacklistStudent(student.id);
+      const studentId = student.id;
+      blacklistStudent(studentId);
       // Additional logic or UI updates related to blacklisting
     } else {
       console.error("No student selected for blacklisting.");
@@ -65,7 +71,7 @@ function Dashboard() {
 
   return (
     <div className="w-full cursor-pointer">
-      <div className="body1 w-full flex flex-col lg:flex-row border-b border-[#ECEEEE]  gap-6 ">
+      <div className=" w-full flex flex-col lg:flex-row border-b border-[#ECEEEE] space-y-6 lg:space-y-0 lg:space-x-6">
         <div className="border-2 items-center gap-5 w-full flex-auto flex text-white p-6 rounded-2xl bg-[#36A1C5]">
           <div className="mb-4">
             <img className="" src={frame1} alt="frame1" />
@@ -184,7 +190,7 @@ function Dashboard() {
                     <div className="w-12 h-12 rounded-full">
                       <img
                         className="w-full h-full rounded-full"
-                        src={`data:image/png;base64,${student.picture}`}
+                        src={`data:image/png;base64,${student.image}`}
                         alt="frame1"
                       />
                     </div>
@@ -215,10 +221,10 @@ function Dashboard() {
                     to={`/editstudent/${student.id}`}
                     className="text-green-600 py-2"
                   >
-                    <i class="fa-solid fa-pen-to-square"></i>
+                    <i className="fa-solid fa-pen-to-square"></i>
                   </NavLink>
                   <span
-                    onClick={() => deletSingleStudent(student.id)}
+                    onClick={() => deleteDetails(student.id, student.firstName, student.lastName)}
                     className="text-red-600 py-2"
                   >
                     <i className="fa-solid fa-trash"></i>
