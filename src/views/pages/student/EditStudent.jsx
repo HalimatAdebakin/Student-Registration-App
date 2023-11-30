@@ -16,6 +16,7 @@ function EditStudent() {
   const [userAccount, setUserAccount] = useState(
     students.filter((u) => u.id === parseInt(id))[0]
   );
+
   const navigate = useNavigate();
 
   const genderOptions = [
@@ -23,23 +24,23 @@ function EditStudent() {
     { value: 'female', label: 'Female' },
   ];
   const courseOptions = [
-    { value: "Systems", label: "Systems" },
-    { value: "Computer", label: "Computer" },
-    { value: "Economics", label: "Economics" },
-    { value: "Law", label: "Law" },
-    { value: "Biology", label: "Biology" },
+    { value: 'Systems', label: 'Systems' },
+    { value: 'Computer', label: 'Computer' },
+    { value: 'Economics', label: 'Economics' },
+    { value: 'Law', label: 'Law' },
+    { value: 'Biology', label: 'Biology' },
   ];
-
 
   const facultyOptions = [
-    { value: "Engineering", label: "Engineering" },
-    { value: "Science", label: "Science" },
-    { value: "Arts", label: "Arts" },
-    { value: "Law", label: "Law" },
-    { value: "Education", label: "Education" },
+    { value: 'Engineering', label: 'Engineering' },
+    { value: 'Science', label: 'Science' },
+    { value: 'Arts', label: 'Arts' },
+    { value: 'Law', label: 'Law' },
+    { value: 'Education', label: 'Education' },
   ];
+
   const webcamRef = useRef(null);
-  const [imgSrc, setImgSrc] = useState(null);
+  const [imgSrc, setImgSrc] = useState('');
 
   const capture = useCallback(() => {
     if (webcamRef.current) {
@@ -64,7 +65,7 @@ function EditStudent() {
     course: Yup.string().required('Course is required'),
     location: Yup.string().required('Location is required'),
   });
-//   console.log('user account', userAccount);
+
   const formik = useFormik({
     initialValues: {
       id: userAccount?.id || '',
@@ -76,10 +77,11 @@ function EditStudent() {
       course: userAccount.course || '',
       faculty: userAccount.faculty || '',
       location: userAccount?.location || '',
+      picture: userAccount?.picture || '',
     },
     validationSchema,
     onSubmit: (values) => {
-     updateStudent(values, values.image);
+      updateStudent(values, userAccount.picture);
       setImgSrc(null);
       navigate('/');
     },
@@ -113,7 +115,13 @@ function EditStudent() {
               <div className='flex gap-4 items-center mb-8'>
                 <div className=''>
                   <div className=' ' required>
-                    {imgSrc ? (
+                    {formik.values.picture ? (
+                      <img
+                        className=' '
+                        src={formik.values.picture}
+                        alt='webcam'
+                      />
+                    ) : imgSrc ? (
                       <img className=' ' src={imgSrc} alt='webcam' />
                     ) : (
                       <Webcam
@@ -126,11 +134,15 @@ function EditStudent() {
                 </div>
                 <div className=' bg-[#36A1C5] border rounded-full w-20 p-2'>
                   {imgSrc ? (
-                    <button onClick={retake}>Retake</button>
+                    <button onClick={retake} type='button'>
+                      Retake
+                    </button>
                   ) : (
-                    <button onClick={capture}>Capture</button>
+                    <button onClick={capture} type='button'>
+                      Capture
+                    </button>
                   )}
- </div>
+                </div>
               </div>
               <div className='mb-4 md:flex gap-6'>
                 <div className='flex-auto'>
@@ -162,7 +174,7 @@ function EditStudent() {
                     className='block text-[#748181] text-sm font-bold mb-2'
                     htmlFor='name'
                   >
-   Last Name
+                    Last Name
                   </label>
                   <input
                     type='text'
@@ -225,7 +237,7 @@ function EditStudent() {
                     className='w-full text-[#131515] px-3 py-2 border text-xs rounded-lg focus:outline-none focus:border-blue-500'
                     required
                   />
- {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+                  {formik.touched.phoneNumber && formik.errors.phoneNumber && (
                     <div className='text-red-500 text-xs mt-1'>
                       {formik.errors.phoneNumber}
                     </div>
@@ -290,38 +302,38 @@ function EditStudent() {
                     className='text-xs text-[#131515]'
                     options={courseOptions}
                     onChange={(selectedOption) =>
-                        handleSelectChange('course', selectedOption)
-                      }
-                      value={courseOptions.find(
-                        (option) => option.label === formik.values.course
-                      )}
-                    />
-                    {formik.touched.course && formik.errors.course && (
-                      <div className='text-red-500 text-xs mt-1'>
-                        {formik.errors.course}
-                      </div>
+                      handleSelectChange('course', selectedOption)
+                    }
+                    value={courseOptions.find(
+                      (option) => option.label === formik.values.course
                     )}
-                  </div>
-                </div>
-                <div className='mb-4'>
-                  <label
-                    className='block text-[#748181] text-sm font-bold mb-2'
-                    htmlFor='location'
-                  >
-                    Location
-                  </label>
-                  <input
-                    type='text'
-                    id='location'
-                    name='location'
-                    placeholder='Enter your location'
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.location}
-                    className='w-full text-xs text-[#131515] px-3 py-2 border rounded-lg h-14 focus:outline-none focus:border-blue-500'
-                    required
                   />
- {formik.touched.location && formik.errors.location && (
+                  {formik.touched.course && formik.errors.course && (
+                    <div className='text-red-500 text-xs mt-1'>
+                      {formik.errors.course}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className='mb-4'>
+                <label
+                  className='block text-[#748181] text-sm font-bold mb-2'
+                  htmlFor='location'
+                >
+                  Location
+                </label>
+                <input
+                  type='text'
+                  id='location'
+                  name='location'
+                  placeholder='Enter your location'
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.location}
+                  className='w-full text-xs text-[#131515] px-3 py-2 border rounded-lg h-14 focus:outline-none focus:border-blue-500'
+                  required
+                />
+                {formik.touched.location && formik.errors.location && (
                   <div className='text-red-500 text-xs mt-1'>
                     {formik.errors.location}
                   </div>
@@ -343,4 +355,4 @@ function EditStudent() {
   );
 }
 
-export default EditStudent;  
+export default EditStudent;

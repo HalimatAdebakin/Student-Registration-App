@@ -1,5 +1,5 @@
 import React from 'react'
-import avatar from "../../../images/avatar.svg";
+import admin from "../../../images/admin.jpg";
 import notification from "../../../images/notifications.svg";
 
 function Header() {
@@ -13,7 +13,7 @@ function Header() {
             </div>
             <div className='hidden md:block'>
               <div className="font-medium text-sm text-[#131515]">
-                Hussein Adebakin
+                Halimat Adebakin
               </div>
               <div className="text-right text-sm font-normal text-[#748181]">
                 Admin
@@ -22,7 +22,7 @@ function Header() {
             <div className='w-fit'>
               <div className='w-full flex md:block items-center justify-between'>
                 <img className="md:hidden" src={notification} alt="notification" />
-                <img className="ml-auto mr-0" src={avatar} alt="avater" />
+                <img className="ml-auto mr-0 w-10 h-10 rounded-full" src={admin} alt="avater" />
               </div>
               <div className="md:hidden font-medium whitespace-nowrap text-sm text-[#131515]">
                 Hussein Adebakin
