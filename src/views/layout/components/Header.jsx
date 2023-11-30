@@ -25,7 +25,7 @@ function Header() {
                 <img className="ml-auto mr-0 w-10 h-10 rounded-full" src={admin} alt="avater" />
               </div>
               <div className="md:hidden font-medium whitespace-nowrap text-sm text-[#131515]">
-                Hussein Adebakin
+                Halimat Adebakin
               </div>
             </div>
         </div>
