@@ -5,7 +5,7 @@ import { useAuth } from "../../../context/AuthContext";
 function SideBar() {
   const { logout } = useAuth();
     return (
-        <div className="hidden xl:flex first-container flex-col justify-between p-4 w-1/7 rounded-2xl bg-[#143566] h-screen">
+        <div className="hidden xl:flex first-container flex-col justify-between p-4 w-1/7 rounded-2xl bg-[#143566]">
           <div>
             <div className="logo border-b pb-6 border-slate-600 mb-8">
               <img className="" src={logo} alt="logo" />

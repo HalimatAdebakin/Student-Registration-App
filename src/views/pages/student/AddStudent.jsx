@@ -24,13 +24,8 @@ function AddStudent() {
   }, [webcamRef, setImgSrc]);
 
   const retake = useCallback(() => {
-    if (webcamRef.current) {
-      const imageSrc = webcamRef.current.getScreenshot();
-      setImgSrc(imageSrc);
-    } else {
-      console.error('webcamRef is null');
-    }
-  }, [webcamRef, setImgSrc]);
+    setImgSrc(''); // Clear the captured image
+  }, [setImgSrc]);
 
   const genderOptions = [
     { value: 'male', label: 'Male' },
@@ -91,8 +86,8 @@ function AddStudent() {
   };
 
   return (
-    <div className='mb-4'>
-      <div className='mx-auto items-center rounded-2xl p-6 bg-[white] pt-10 w-full lg:w-[730px]  border-2 border-[#ECEEEE]'>
+    <div className=''>
+      <div className='mx-auto items-center rounded-2xl p-4 bg-[white]  w-full lg:w-[730px]  border-2 border-[#ECEEEE]'>
         <h2 className='text-base text-[#131515] text-center font-medium mb-6 md:mb-2'>
           Basic Information
         </h2>
@@ -104,7 +99,7 @@ function AddStudent() {
                   <img className=' ' src={imgSrc} alt='webcam' />
                 ) : (
                   <Webcam
-                    className='h-24 w-24'
+                    className='h-20 w-20'
                     ref={webcamRef}
                     screenshotFormat='image/png'
                   />

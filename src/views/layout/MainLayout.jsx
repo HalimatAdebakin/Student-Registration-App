@@ -11,7 +11,7 @@ function MainLayout({ children, config, userData}) {
 
   return (
     <FadeTransition>
-      <div className="flex gap-4 w-full  overflow-y-hidden md:p-6 bg-[#f3fafc] cursor-pointer">
+      <div className="flex gap-4 w-full  overflow-y-hidden md:p-6 bg-[#f3fafc] cursor-pointer h-screen">
         <SideBar className="h-full" />
 
         <div className="second-container flex-auto bg-white w-5/7 border rounded-2xl cursor-pointer">

@@ -107,7 +107,7 @@ function EditStudent() {
         <div>Please wait page loading.......</div>
       ) : (
         <div className=''>
-          <div className='mx-auto items-center rounded-2xl p-6 bg-[white] pt-10 w-full lg:w-[730px] border-2 border-[#ECEEEE]'>
+          <div className='mx-auto items-center rounded-2xl p-4 bg-[white] w-full lg:w-[730px] border-2 border-[#ECEEEE]'>
             <h2 className='text-base text-[#131515] text-center font-medium mb-6 md:mb-2'>
               Basic Information
             </h2>
