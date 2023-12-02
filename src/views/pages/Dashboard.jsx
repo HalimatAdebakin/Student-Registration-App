@@ -141,7 +141,7 @@ function Dashboard() {
             </div>
             <div className="text-[#748181] ">
               <input
-                className="focus:outline-none appearance-none"
+                className="focus:outline-none appearance-none w-[150px] md:w-full"
                 type="text"
                 id="search"
                 value={searchTerm}
